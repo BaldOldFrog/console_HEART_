@@ -2,13 +2,17 @@
 {
     class Program
     {
-        static void PrintHeart(double heartSize, int height = 30, int width = 120)
+        static void PrintHeart(double heartSize, string word, int height = 30, int width = 120)
         {
             Console.SetWindowSize(width, height);
             Console.SetBufferSize(width, height);
 
             char[,] buffer = new char[height, width];
-            for(int i = 0; i < height; i++)
+            char[] lettersInWord = new char[word.Length];
+            lettersInWord = word.ToCharArray();
+
+            int k = 0;
+            for (int i = 0; i < height; i++)
             {
                 for(int j = 0; j < width; j++)
                 {
@@ -17,13 +21,15 @@
                     double y = -(i - height / 2);
 
                     //set "square" symbol
-                    y *= 1.9;
+                    y *= 2;
 
                     double heart = (int)(x * x + (y - Math.Sqrt(Math.Abs(x))) * (y - Math.Abs(x)));
 
                     if (heart <= heartSize)
                     {
-                        buffer[i, j] = '♥';
+                        if (k >= word.Length) k = 0;
+                        buffer[i, j] = lettersInWord[k];
+                        k++;
                     }
                     else
                     {
@@ -40,7 +46,7 @@
 
         static void Main()
         {
-            PrintHeart(500);
+            PrintHeart(500, "love");
             Console.ReadLine();
         }
     }
